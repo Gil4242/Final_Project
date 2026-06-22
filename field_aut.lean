@@ -135,11 +135,12 @@ def invTransposeAutSL3 : AutSL3 R where
 
 
 
-theorem zero_if_eq_neg {x : R} (h : x = -x) : 0 = x := by
-  -- TODO: make sure group 4 uses it
-  rw [← one_mul x, ← invOf_mul_self (2 : R), mul_assoc, two_mul]
-  nth_rw 2 [h]
-  rw [← sub_eq_add_neg, sub_self, mul_zero]
+theorem zero_iff_eq_neg_self {R : Type*} [Ring R] [Invertible (2 : R)] (x : R): 0 = x ↔ x = -x := by
+  constructor
+  · intro h
+    rw [← h, neg_zero]
+  · intro h
+    rw [← one_mul x, ← invOf_mul_self (2 : R), mul_assoc, two_mul, add_eq_zero_iff_eq_neg.mpr h, mul_zero]
 
 namespace FieldAutomorpisms
 
@@ -249,10 +250,10 @@ theorem w_preserved
                    add_cons, empty_add_empty, neg_zero, neg_neg]
       ext i j
       fin_cases i <;> fin_cases j <;> simp only [Fin.reduceFinMk, of_apply, cons_val]
-      · exact zero_if_eq_neg F (this 0 2).symm
-      · exact zero_if_eq_neg F (this 1 2).symm
-      · exact zero_if_eq_neg F (this 2 0).symm
-      · exact zero_if_eq_neg F (this 2 1).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 0 2).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 1 2).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 2 0).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 2 1).symm
     have second_rep:
           !![0,      v1 0 1, 0;
              v1 1 0, 0,      0;
@@ -281,8 +282,8 @@ theorem w_preserved
       nth_rw 4 [← first_rep]
       ext i j
       fin_cases i <;> fin_cases j <;> simp only [Fin.reduceFinMk, of_apply, cons_val]
-      · exact zero_if_eq_neg F this.left
-      · exact zero_if_eq_neg F this.right.symm
+      · exact (zero_iff_eq_neg_self _).mpr this.left
+      · exact (zero_iff_eq_neg_self _).mpr this.right.symm
     have det_v1: det v1 = 1 := by
       rw [SpecialLinearGroup.det_coe]
     have not_zero_v101: IsUnit (v1 0 1) := by
@@ -359,10 +360,10 @@ theorem w_preserved
                    add_cons, empty_add_empty, neg_zero, neg_neg]
       ext i j
       fin_cases i <;> fin_cases j <;> simp only [Fin.reduceFinMk, of_apply, cons_val]
-      · exact zero_if_eq_neg F (this 0 1).symm
-      · exact zero_if_eq_neg F (this 0 2).symm
-      · exact zero_if_eq_neg F (this 1 0).symm
-      · exact zero_if_eq_neg F (this 2 0).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 0 1).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 0 2).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 1 0).symm
+      · exact (zero_iff_eq_neg_self _).mpr (this 2 0).symm
     have second_rep:
           !![v2 0 0, 0,      0;
              0,      0, v2 1 2;
@@ -391,8 +392,8 @@ theorem w_preserved
       nth_rw 4 [← first_rep]
       ext i j
       fin_cases i <;> fin_cases j <;> simp only [Fin.reduceFinMk, of_apply, cons_val]
-      · exact zero_if_eq_neg F this.left.symm
-      · exact zero_if_eq_neg F this.right
+      · exact (zero_iff_eq_neg_self _).mpr this.left.symm
+      · exact (zero_iff_eq_neg_self _).mpr this.right
     have det_v2: det v2 = 1 := by
       rw [SpecialLinearGroup.det_coe]
     have not_zero_v212: IsUnit (v2 1 2) := by
