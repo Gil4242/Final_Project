@@ -135,12 +135,14 @@ def invTransposeAutSL3 : AutSL3 R where
 
 
 
-theorem zero_iff_eq_neg_self {R : Type*} [Ring R] [Invertible (2 : R)] (x : R): 0 = x ↔ x = -x := by
+theorem zero_iff_eq_neg_self {R : Type*} [Ring R] [Invertible (2 : R)] (x : R):
+  0 = x ↔ x = -x := by
   constructor
   · intro h
     rw [← h, neg_zero]
   · intro h
-    rw [← one_mul x, ← invOf_mul_self (2 : R), mul_assoc, two_mul, add_eq_zero_iff_eq_neg.mpr h, mul_zero]
+    rw [← one_mul x, ← invOf_mul_self (2 : R), mul_assoc, two_mul, add_eq_zero_iff_eq_neg.mpr h,
+        mul_zero]
 
 namespace FieldAutomorpisms
 
