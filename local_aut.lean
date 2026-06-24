@@ -100,7 +100,18 @@ theorem sl_congruent_iff_reduction_eq {A B : SL3 R} :
     SLCongruentModJ R A B ↔
       (Matrix.SpecialLinearGroup.map (IsLocalRing.residue R)) A =
         (Matrix.SpecialLinearGroup.map (IsLocalRing.residue R)) B := by
-  sorry
+  constructor
+  · intro h
+    ext i j
+    exact (Ideal.Quotient.eq (I := J R) (x := A i j) (y := B i j)).2 (h i j)
+  · intro h i j 
+    have h' :
+        (IsLocalRing.residue R) (A i j) = (IsLocalRing.residue R) (B i j) := by
+      simpa [Matrix.SpecialLinearGroup.map] using
+        congrArg
+          (fun X : SL3 (IsLocalRing.ResidueField R) =>
+            (X : Matrix (Fin 3) (Fin 3) (IsLocalRing.ResidueField R)) i j) h
+    exact (Ideal.Quotient.eq (I := J R) (x := A i j) (y := B i j)).1 h'
 
 /-
 Lemma 3 from Block 4: if the diagonal involutions are fixed modulo `J`, then a
