@@ -117,7 +117,7 @@ theorem sl_congruent_iff_reduction_eq {A B : SL3 R} :
 Lemma 3 from Block 4: if the diagonal involutions are fixed modulo `J`, then a
 change of basis congruent to the identity makes them fixed exactly.
 -/
-ttheorem diagonal_preserved_after_local_change_of_basis
+theorem diagonal_preserved_after_local_change_of_basis
     (φ : AutSL3 R) (hdiag : DiagonalFixedModJ R φ) :
     ∃ g₁ : GL3 R,
       GL3IsOneModJ R g₁ ∧
